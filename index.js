@@ -44,6 +44,8 @@ const fecher =async (handle)=>{
       let ratingData = JSON.parse(data.data.substring(allRating, allRating2));
       let dom = new JSDOM(data.data);
       let document = dom.window.document;
+      let ProblemsSolved =  document.querySelectorAll(".problems-solved h3");
+
       return {
         success: true,
         status:resdata.status,
@@ -51,6 +53,9 @@ const fecher =async (handle)=>{
           .children[0].src,
         name: document.querySelector(".user-details-container").children[0]
           .children[1].textContent,
+        TotalProblemsSolved: parseInt(
+           ProblemsSolved[3].textContent.split(":")[1].trim()
+        ),
         currentRating: parseInt(
           document.querySelector(".rating-number")?.textContent
         ),
@@ -70,6 +75,7 @@ const fecher =async (handle)=>{
         ),
         stars: document.querySelector(".rating")?.textContent || "unrated",
         heatMap: headMapData,
+        // TotalProblemsSolved: document.querySelectorAll(".problems-solved"),
         ratingData,
       };
     }
